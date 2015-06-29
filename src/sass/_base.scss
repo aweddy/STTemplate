@@ -1,0 +1,29 @@
+
+//Breakpoints
+$iphone-portrait: 320px;
+$iphone-landscape: 480px;
+$six-forty: 640px;
+$ipad-portrait: 768px;
+$ipad-landscape: 1024px;
+$twelve-eighty: 1280px;
+$fourteen-hundred: 1400px;
+
+//Z-index Map
+$z-index: (
+
+);
+//Color map - name colors for what they are styling if possible (always possible).
+//This makes your sass far more human readable for a developer who may have to work on it months after you've finished cutup
+
+$blue: #0066cc;
+
+$colors: (
+	text: #333,
+	bg: white,
+
+    link: $blue,
+    link-hover: lighten($blue, 20%),
+
+    nav-item-bg: #fafafa,
+);
+

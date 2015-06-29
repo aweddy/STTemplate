@@ -1,0 +1,86 @@
+
+$breakpoints: small medium large;
+$space-types: padding margin;
+$directions: top right bottom left;
+$column-count: 12;
+$gutter-ratio: 1/20;
+
+@function col($n, $total-columns: $column-count, $with-gutter: true) {
+	@if $n == $total-columns {
+		@return 100%;
+	}
+	@else {
+		$size: ($n / $column-count);
+		$gutter-size: $size * $gutter-ratio;
+		@if $with-gutter {
+			@return ($size - $gutter-size) * 100%;
+		}
+		@else {
+			@return $size * 100%;
+		}
+	}
+}
+@function gutter($n, $total-columns: $column-count) {
+	@if $n == $total-columns {
+		@return 0;
+	}
+	@else {
+		$size: ($n / $column-count);
+		$gutter-size: $size * $gutter-ratio;
+		@return ($gutter-size) * 100%;
+	}
+}
+@mixin grid($breakpoint: "") {
+	@if $breakpoint != "" {
+		$breakpoint: "-#{$breakpoint}";
+	}
+	@for $i from 1 through $column-count {
+		.col-#{$i}#{$breakpoint} {
+			display: inline-block;
+			vertical-align: top;
+			@if $i == $column-count {
+				width: 100%;
+				margin-right: 0;
+			}
+			@else {
+				width: col($i, $column-count);
+				margin-right: gutter($i, $column-count);
+				&-last {
+					display: inline-block;
+					vertical-align: top;
+					width: col($i, $column-count, false);
+					margin-right: 0;
+				}
+			}
+		}
+	}
+}
+
+@each $type in $space-types {
+	@for $i from 1 through 20 {
+		@each $direction in $directions {
+			.#{$type}-#{$direction}-#{$i} {
+				@include rem(#{$type}-#{$direction}, $i);
+			}
+		}
+		.#{$type}-rl-#{$i} {
+			@include rem(#{$type}-left, $i);
+			@include rem(#{$type}-right, $i);
+		}
+		.#{$type}-tb-#{$i} {
+			@include rem(#{$type}-top, $i);
+			@include rem(#{$type}-bottom, $i);
+		}
+		.#{$type}-#{$i} {
+			@include rem(#{$type}, $i);
+		}
+	}
+}
+
+@include grid;
+@media screen and (max-width: $iphone-landscape) {
+	@include grid(small);
+}
+@media screen and (min-width: $iphone-landscape + 1px) and (max-width: $ipad-landscape) {
+	@include grid(medium);
+}

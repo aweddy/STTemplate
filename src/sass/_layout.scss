@@ -1,0 +1,5 @@
+@import "grid";
+
+header, nav, article, aside, footer {
+	@include rem(padding, 0, 1);
+}
